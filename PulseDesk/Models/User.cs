@@ -1,20 +1,30 @@
 namespace PulseDesk.Models;
 
 using PulseDesk.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 public class User
 {
-    public required int Id { get; set; }
+    [Key]
+    public  int Id { get; set; }
+
+    [MaxLength(150)]
+    public  string FullName { get; set; } = string.Empty;
+
+    [Required]
+    [MaxLength(150)]
+    [EmailAddress]
+    public  string Email { get; set; } = string.Empty;
+
+    [Required]
+    public  string PasswordHash { get; set; } = string.Empty;
+
+    [Required]
+    public  UserRole Role { get; set; } = UserRole.Customer;
     
-  public required string FullName { get; set; }
-    public required string Email { get; set; }
+    [Required]
+    public  DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public required string PasswordHash { get; set; }
-
-    public required UserRole Role { get; set; }
-
-    public required DateTime CreatedAt { get; set; }
-
-    public required Boolean IsActive { get; set; }
+    public  bool IsActive { get; set; } = true;
 
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("19b30661-b47d-4bf1-84e3-d1ca2fdcffaa")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("PulseDesk")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1bab936af932ebb0439f9eedfb24d670fe136a9b")]
 [assembly: System.Reflection.AssemblyProductAttribute("PulseDesk")]
