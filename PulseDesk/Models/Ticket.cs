@@ -26,17 +26,16 @@ public class Ticket
     public int? AgentId { get; set; }
 
     [Required]
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     [Required]
-    public DateTime UpdatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     [ForeignKey("CustomerId")]
-    public User Customer { get; set; } = null;
+    public User Customer { get; set; } = null!;
 
     [ForeignKey("AgentId")]
     public User? Agent { get; set; }
-
 
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 

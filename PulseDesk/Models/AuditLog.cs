@@ -1,20 +1,36 @@
-﻿namespace PulseDesk.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PulseDesk.Models
 {
     public class AuditLog
     {
-        public required int Id { get; set; }
+        [Key]
+        public  int Id { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Field { get; set; } = string.Empty;
+
+        public  int TicketId { get; set; }
+        [Required]
+
+        public int ChangedByUserId { get; set; }
+        [Required]
+
+        public string OldValue{ get; set; } = string.Empty;
+
+        [Required]
+        public string NewValue { get; set; } = string.Empty;
         
-        public required int TicketId { get; set; }
+        [Required]
+        public DateTime ChangedAt { get; set; }
 
-        public required int ChangedByUserId { get; set; }
+        [ForeignKey("TicketId")]
+        public Ticket Ticket { get; set; } = null!;
 
-        public required string Field{ get; set; }
-
-        public required string OldValue{ get; set; }
-
-        public required string NewValue{ get; set; }
-
-        public required DateTime ChangedAt { get; set; }
+        [ForeignKey("ChangedByUserId")]
+        public User ChangedBy { get; set; } = null!;
 
     }
 }

@@ -3,5 +3,5 @@
     {
         Customer,
         Agent,
-        Manager
+        Admin
     }
