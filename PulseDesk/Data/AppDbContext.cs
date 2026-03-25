@@ -43,7 +43,6 @@ namespace PulseDesk.Data
                 entity.HasOne(a => a.Ticket).WithMany(t => t.AuditLogs).HasForeignKey(a => a.TicketId);
                 entity.HasOne(a => a.ChangedBy).WithMany(u => u.AuditLogs).HasForeignKey(a => a.ChangedByUserId).OnDelete(DeleteBehavior.Restrict);
             });
-
         }
     }
 }

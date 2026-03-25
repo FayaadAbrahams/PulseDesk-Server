@@ -1,8 +1,5 @@
-using BCrypt.Net;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.IdentityModel.Tokens;
 using PulseDesk.Data;
 using PulseDesk.DTOs.Auth;
@@ -11,7 +8,6 @@ using PulseDesk.Models.Enums;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 
 namespace PulseDesk.Controllers
 {
@@ -32,7 +28,7 @@ namespace PulseDesk.Controllers
 
             var user = new User
             {
-                FullName = req.Email,
+                FullName = req.FullName,
                 Email = req.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
                 Role = UserRole.Customer
@@ -55,6 +51,12 @@ namespace PulseDesk.Controllers
 
             }
 
+            bool validPassword = BCrypt.Net.BCrypt.Verify(req.Password, user.PasswordHash);
+
+            if (!validPassword)
+            {
+                return Unauthorized(new { message = "Invalid Credentials" });
+            }
             var token = GenerateToken(user);
 
             return Ok(new AuthResponse
@@ -88,5 +90,10 @@ namespace PulseDesk.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
+
+    // Add Get All Method
+    // Add Get By Id Method for Comments/Tickets/AuditLogs/Users
+    // Add Update Method for Comments/Tickets/AuditLogs/Users
+    // Add Delete Method
 
 }
