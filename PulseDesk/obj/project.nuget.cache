@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VkVEDw85IoI=",
+  "dgSpecHash": "uirIkQh5oPo=",
   "success": true,
   "projectFilePath": "C:\\Users\\Fayaad\\OneDrive\\Documents\\GitHub\\PulseDesk\\server\\PulseDesk\\PulseDesk\\PulseDesk.csproj",
   "expectedPackageFiles": [
@@ -35,7 +35,10 @@
     "C:\\Users\\Fayaad\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
     "C:\\Users\\Fayaad\\.nuget\\packages\\mysqlconnector\\2.4.0\\mysqlconnector.2.4.0.nupkg.sha512",
     "C:\\Users\\Fayaad\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\9.0.0\\pomelo.entityframeworkcore.mysql.9.0.0.nupkg.sha512",
+    "C:\\Users\\Fayaad\\.nuget\\packages\\scrutor\\3.3.0\\scrutor.3.3.0.nupkg.sha512",
     "C:\\Users\\Fayaad\\.nuget\\packages\\swashbuckle.aspnetcore\\10.1.5\\swashbuckle.aspnetcore.10.1.5.nupkg.sha512",
+    "C:\\Users\\Fayaad\\.nuget\\packages\\swashbuckle.aspnetcore.filters\\10.0.1\\swashbuckle.aspnetcore.filters.10.0.1.nupkg.sha512",
+    "C:\\Users\\Fayaad\\.nuget\\packages\\swashbuckle.aspnetcore.filters.abstractions\\10.0.1\\swashbuckle.aspnetcore.filters.abstractions.10.0.1.nupkg.sha512",
     "C:\\Users\\Fayaad\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\10.1.5\\swashbuckle.aspnetcore.swagger.10.1.5.nupkg.sha512",
     "C:\\Users\\Fayaad\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\10.1.5\\swashbuckle.aspnetcore.swaggergen.10.1.5.nupkg.sha512",
     "C:\\Users\\Fayaad\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\10.1.5\\swashbuckle.aspnetcore.swaggerui.10.1.5.nupkg.sha512",

@@ -25,8 +25,8 @@ public class User
     [Required]
     public  DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    // New field to track if the user is active or not - Added for soft deletes and account management,
-    // allows us to deactivate accounts without permanently deleting them
+    // Track if the user is active or not - Added for soft deletes and account management,
+    //  Used as a flag to deactivate accounts without permanently deleting them
     public bool IsActive { get; set; } = true;
 
     public ICollection<Ticket> RaisedTickets { get; set; } = new List<Ticket>();

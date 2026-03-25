@@ -90,10 +90,4 @@ namespace PulseDesk.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
-
-    // Add Get All Method
-    // Add Get By Id Method for Comments/Tickets/AuditLogs/Users
-    // Add Update Method for Comments/Tickets/AuditLogs/Users
-    // Add Delete Method
-
 }

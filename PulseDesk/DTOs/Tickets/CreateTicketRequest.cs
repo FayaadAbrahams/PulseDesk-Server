@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PulseDesk.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace PulseDesk.DTOs.Tickets
 {
@@ -12,6 +13,6 @@ namespace PulseDesk.DTOs.Tickets
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        public string Priority { get; set; } = "Medium";
+        public PriorityType Priority { get; set; } = PriorityType.Low;
     }
 }
