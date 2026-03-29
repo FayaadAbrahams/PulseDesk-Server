@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -41,7 +42,7 @@ namespace PulseDesk.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] DTOs.Auth.LoginRequest req)
+        public async Task<IActionResult> Login([FromBody] LoginRequest req)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == req.Email);
 
@@ -66,6 +67,30 @@ namespace PulseDesk.Controllers
                 Email = user.Email,
                 Role = user.Role.ToString()
             });
+        }
+
+        [HttpPut("{id}/role")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateRole(int id, [FromBody]UpdateRoleRequest req)
+        {
+            var user = await _db.Users.FindAsync(id);
+
+            if(user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            if(user.Id == CurrentUserId)
+            {
+                return BadRequest(new { message = "Cannot change your own role" });
+            }
+
+            var oldRole = user.Id;
+
+            user.Role = req.Role;
+            await _db.SaveChangesAsync();
+
+            return Ok(new { message = $"Updated role from {oldRole} to {req.Role}" });
         }
 
         private string GenerateToken(User user)

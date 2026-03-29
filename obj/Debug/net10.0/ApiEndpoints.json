@@ -32,6 +32,36 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "PulseDesk.Controllers.DashboardController",
+    "Method": "GetAgentWorkLoad",
+    "RelativePath": "api/Dashboard/agent-workload",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PulseDesk.Controllers.DashboardController",
+    "Method": "GetRecentActivity",
+    "RelativePath": "api/Dashboard/recent-activity",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PulseDesk.Controllers.DashboardController",
+    "Method": "GetStats",
+    "RelativePath": "api/Dashboard/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PulseDesk.Controllers.TicketsController",
     "Method": "GetAll",
     "RelativePath": "api/Tickets",
@@ -106,6 +136,64 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PulseDesk.Controllers.CommentsController",
+    "Method": "GetAll",
+    "RelativePath": "api/tickets/{ticketId}/comments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticketId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PulseDesk.Controllers.CommentsController",
+    "Method": "Create",
+    "RelativePath": "api/tickets/{ticketId}/comments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticketId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "req",
+        "Type": "PulseDesk.DTOs.Comments.CreateCommentRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PulseDesk.Controllers.CommentsController",
+    "Method": "Delete",
+    "RelativePath": "api/tickets/{ticketId}/comments",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticketId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

@@ -1,4 +1,6 @@
-﻿namespace PulseDesk.DTOs.Tickets
+﻿using PulseDesk.Models.Enums;
+
+namespace PulseDesk.DTOs.Tickets
 {
     public class TicketResponse
     {
@@ -8,9 +10,9 @@
 
         public string Description { get; set; } = string.Empty;
 
-        public string Status { get; set; } = string.Empty;
+        public StatusType Status { get; set; } = StatusType.Open;
 
-        public string Priority { get; set; } = string.Empty;
+        public PriorityType Priority { get; set; } = PriorityType.Medium;
 
         public string CustomerName { get; set; } = string.Empty;
 

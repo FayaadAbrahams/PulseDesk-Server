@@ -3,6 +3,6 @@ public enum StatusType
 {
     Open,
     InProgress,
+    Resolved,
     Closed,
-    Escalated
 }

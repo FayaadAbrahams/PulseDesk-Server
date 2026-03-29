@@ -266,3 +266,4 @@ C:\Users\Fayaad\OneDrive\Documents\GitHub\PulseDesk\server\PulseDesk\obj\Debug\n
 C:\Users\Fayaad\OneDrive\Documents\GitHub\PulseDesk\server\PulseDesk\obj\Debug\net10.0\PulseDesk.pdb
 C:\Users\Fayaad\OneDrive\Documents\GitHub\PulseDesk\server\PulseDesk\obj\Debug\net10.0\PulseDesk.genruntimeconfig.cache
 C:\Users\Fayaad\OneDrive\Documents\GitHub\PulseDesk\server\PulseDesk\obj\Debug\net10.0\ref\PulseDesk.dll
+C:\Users\Fayaad\OneDrive\Documents\GitHub\PulseDesk\server\PulseDesk\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Ticket
 {
     [Key]
-    [MaxLength(150)]
     public  int Id { get; set; }
 
     [Required]
@@ -18,7 +17,7 @@ public class Ticket
     public StatusType Status { get; set; } = StatusType.Open;
 
     [Required]
-    public string Priority { get; set; } = "Medium";
+    public PriorityType Priority { get; set; } = PriorityType.Medium;
 
     [Required]
     public int CustomerId { get; set; }

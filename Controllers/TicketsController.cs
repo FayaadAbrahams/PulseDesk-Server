@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PulseDesk.Data;
+using PulseDesk.DTOs.Comments;
 using PulseDesk.DTOs.Tickets;
 using PulseDesk.Models;
 using PulseDesk.Models.Enums;
@@ -41,8 +42,8 @@ namespace PulseDesk.Controllers
                 Id = t.Id,
                 Title = t.Title,
                 Description = t.Description,
-                Status = t.Status.ToString(),
-                Priority = t.Priority.ToString(),
+                Status = t.Status,
+                Priority = t.Priority,
                 CustomerName = t.Customer.FullName,
                 AgentName = t.Agent != null ? t.Agent.FullName : null,
                 CreatedAt = t.CreatedAt,
@@ -57,7 +58,10 @@ namespace PulseDesk.Controllers
         {
             var userId = CurrentUserId;
             var role = CurrentUserRole;
-            var ticket = await _db.Tickets.Include(t => t.Customer).Include(t => t.Agent).Include(t => t.Comments).ThenInclude(u => u.User).FirstOrDefaultAsync(t => t.Id == id);
+            var ticket = await _db.Tickets
+                .Include(t => t.Customer)
+                .Include(t => t.Agent)
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             if (ticket == null)
             {
@@ -75,12 +79,12 @@ namespace PulseDesk.Controllers
                 Id = ticket.Id,
                 Title = ticket.Title,
                 Description = ticket.Description,
-                Status = ticket.Status.ToString(),
+                Status = ticket.Status,
                 Priority = ticket.Priority,
                 CustomerName = ticket.Customer.FullName,
                 AgentName = ticket.Agent?.FullName,
                 CreatedAt = ticket.CreatedAt,
-                UpdatedAt = ticket.UpdatedAt
+                UpdatedAt = ticket.UpdatedAt,
             });
 
         }
@@ -96,7 +100,7 @@ namespace PulseDesk.Controllers
             {
                 Title = req.Title,
                 Description = req.Description,
-                Priority = req.Priority.ToString(),
+                Priority = req.Priority,
                 CustomerId = userId,
                 Status = StatusType.Open
             };
@@ -121,15 +125,15 @@ namespace PulseDesk.Controllers
                 return NotFound(new { message = "Ticket not found" });
             }
 
-            if (req.Status != null && req.Status != ticket.Status.ToString())
+            if (req.Status != null && req.Status != ticket.Status)
             {
-                await LogChange(ticket.Id, userId, "Status", ticket.Status.ToString(), req.Status);
+                await LogChange(ticket.Id, userId, "Status", ticket.Status.ToString(), req.Status.ToString());
             }
 
             if (req.Priority != null && req.Priority != ticket.Priority)
             {
-                await LogChange(ticket.Id, userId, "Priority", ticket.Priority, req.Priority);
-                ticket.Priority = req.Priority;
+                await LogChange(ticket.Id, userId, "Priority", ticket.Priority.ToString(), req.Priority.ToString());
+                ticket.Priority = (PriorityType)req.Priority;
             }
 
             if (req.AgentId != null && req.AgentId != ticket.AgentId)
@@ -171,7 +175,7 @@ namespace PulseDesk.Controllers
             {
                 TicketId = ticketId,
                 ChangedByUserId = userId,
-                Field = field,
+                FieldName = field,
                 OldValue = oldValue,
                 NewValue = newValue
             };

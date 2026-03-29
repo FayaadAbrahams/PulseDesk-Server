@@ -25,8 +25,8 @@ namespace PulseDesk.Data
 
             modelB.Entity<Ticket>(entity =>
             {
-                entity.Property(i => i.Status).HasDefaultValue(StatusType.Open);
-                entity.Property(u => u.Priority).HasConversion<string>().HasDefaultValue(PriorityType.Low);
+                entity.Property(i => i.Status).HasConversion<string>().HasDefaultValue(StatusType.Open);
+                entity.Property(u => u.Priority).HasConversion<string>().HasDefaultValue(PriorityType.Medium);
                 entity.HasOne(i => i.Customer).WithMany(u => u.RaisedTickets).HasForeignKey(t => t.CustomerId).OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(i => i.Agent).WithMany(u => u.AssignedTickets).HasForeignKey(t => t.AgentId).OnDelete(DeleteBehavior.Restrict);
             });
@@ -34,7 +34,6 @@ namespace PulseDesk.Data
             modelB.Entity<Comment>(entity =>
             {
                 entity.HasOne(i => i.Ticket).WithMany(u => u.Comments).HasForeignKey(t => t.TicketId).OnDelete(DeleteBehavior.Restrict);
-
                 entity.HasOne(i => i.User).WithMany(u => u.Comments).HasForeignKey(t => t.UserId).OnDelete(DeleteBehavior.Restrict);
             });
 

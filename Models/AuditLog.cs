@@ -10,11 +10,12 @@ namespace PulseDesk.Models
 
         [Required]
         [MaxLength(100)]
-        public string Field { get; set; } = string.Empty;
+        public string FieldName { get; set; } = string.Empty;
 
-        public  int TicketId { get; set; }
         [Required]
-
+        public  int TicketId { get; set; }
+        
+        [Required]
         public int ChangedByUserId { get; set; }
         [Required]
 
