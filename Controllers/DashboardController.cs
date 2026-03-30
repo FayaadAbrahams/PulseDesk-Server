@@ -16,7 +16,17 @@ namespace PulseDesk.Controllers
     {
         private readonly AppDbContext _db = db;
 
-        // GET api/dashboard/stats
+        /// <summary>
+        /// Fetch the overall stats for the current tickets in the system. A High level overview of the system.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET api/dashboard/stats
+        /// 
+        /// </remarks>
+        /// <returns>A success response with an object defining all tickets, number of assigned tickets, resolved tickts, statuses and priorities</returns>
+        /// <response code="200">Agent work load was pulled successfully</response>
         [HttpGet("stats")]
         public async Task<IActionResult> GetStats()
         {
@@ -54,7 +64,7 @@ namespace PulseDesk.Controllers
         }
 
         /// <summary>
-        /// Fetch the workload of each agent. 
+        /// Fetch the workload of agents. 
         /// Helpful to know if there's backlogs.
         /// </summary>
         /// <remarks>
