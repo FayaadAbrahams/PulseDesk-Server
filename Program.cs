@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PulseDesk.Data;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,7 +69,22 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "PulseDesk API",
-        Version = "v1"
+        Version = "v1",
+        Description = @" API for PulseDesk (A ticket Help Desk Management Tool)
+
+        Roles
+            - Customers can create tickets and comment on their own tickets.
+            - Agents can manage tickets assigned to them and comment on those tickets.
+            - Admin have full access to all tickets and can manage users.
+
+        Authentication
+        Requires a valid JWT token for all endpoints.
+        ",
+        Contact = new OpenApiContact
+        {
+            Name = "Fayaad Abrahams",
+            Email = "fayaad.abrahams1@gmail.com"
+        }
     });
 
     var securityScheme = new OpenApiSecurityScheme
@@ -94,6 +110,10 @@ builder.Services.AddSwaggerGen(c =>
             Array.Empty<string>()
         }
     });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath, includeControllerXmlComments : true);
 });
 
 

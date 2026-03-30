@@ -6,6 +6,9 @@ using PulseDesk.Models.Enums;
 
 namespace PulseDesk.Controllers
 {
+    /// <summary>
+    /// Dashboard controller provides endpoints for statistics for PulseDesk. Only accessible through Admins and Agents (Privacy amongst costumers)
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Admin,Agent")]
@@ -50,7 +53,18 @@ namespace PulseDesk.Controllers
             });
         }
 
-        // GET api/dashboard/agent-workload 
+        /// <summary>
+        /// Fetch the workload of each agent. 
+        /// Helpful to know if there's backlogs.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/Dashboard/stats
+        /// 
+        /// </remarks>
+        /// <returns>A agentWorkload Response - consists of all agents, any open tickets, in progress, resolve and total assigned tickets</returns>
+        /// <response code="200">Agent work load was pulled successfully</response>
         [HttpGet("agent-workload")]
         public async Task<IActionResult> GetAgentWorkLoad()
         {
@@ -70,7 +84,17 @@ namespace PulseDesk.Controllers
             return Ok(agentWorkload);
         }
 
-        // GET api/dashboard/recent-activity
+        /// <summary>
+        /// Get the most recent activity done on the system. This includes recent tickets created and recent updates on tickets
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET api/dashboard/recent-activity
+        /// 
+        /// </remarks>
+        /// <returns>A success response</returns>
+        /// <response code="200">Allows the user to view the most recent tickets/activity</response>
         [HttpGet("recent-activity")]
         public async Task<IActionResult> GetRecentActivity()
         {
@@ -106,6 +130,67 @@ namespace PulseDesk.Controllers
                 RecentTickets = recentTickets,
                 RecentActivity = recentActivity,
             });
+        }
+
+        /// <summary>
+        /// Fetch a list of all users in the system, their role and how many tickets they have raised or assigned to them. This is useful for Admins to manage users and see the workload of each user.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/Dashboard/users
+        /// 
+        /// </remarks>
+        /// <returns>A success response</returns>
+        /// <response code="200">Fetched the users in the system</response>
+        [HttpGet("users")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _db.Users.Select(i => new
+            {
+                i.Id,
+                i.FullName,
+                i.Email,
+                Role = i.Role.ToString(),
+                i.IsActive,
+                i.CreatedAt,
+                TotalTicketsRaised = i.RaisedTickets.Count(),
+                TotalTicketsAssigned = i.AssignedTickets.Count()
+            }).OrderBy(u => u.Role).ToListAsync();
+
+            return Ok(users);
+        }
+
+        /// <summary>
+        /// Deletes a user in the system. Only Admins can delete users.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     DELETE /api/Dashboard/delete-user/1
+        /// 
+        /// </remarks>
+        /// <returns>A success response</returns>
+        /// <response code="200">Deleted the user successfully</response>
+        /// <response code="404">No User found that matches that specific id</response>
+        [HttpDelete("delete-user/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUser(int id
+            )
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(c => c.Id == id && c.Id == id);
+
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            await _db.Users.Where(u => u.Id == id).ExecuteDeleteAsync();
+            await _db.SaveChangesAsync();
+
+            return Ok(new { message = $"User {user.Email} deleted successfully" });
+
         }
     }
 }

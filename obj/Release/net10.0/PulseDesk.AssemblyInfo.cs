@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PulseDesk")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca03e313c68234e490a9fdbe1cef9c4f2dce5741")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+058ca737871377127b04c2441d3f33c13551c94b")]
 [assembly: System.Reflection.AssemblyProductAttribute("PulseDesk")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PulseDesk")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

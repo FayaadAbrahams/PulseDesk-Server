@@ -11,7 +11,9 @@ using System.Security.Claims;
 
 namespace PulseDesk.Controllers
 {
-    // [Authorize] Is for JWT Authorization, it ensures that only authenticated users can access the endpoints in this controller
+    /// <summary>
+    /// Tickets are the bread and butter for PulseDesk, tickets are the issues a customer will point out. Customers can create tickets, view their own tickets and see the status of their tickets. Agents can view all tickets, update the status, priority and assignment of a ticket. Admins have all the permissions of agents and can also delete tickets.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
@@ -19,11 +21,24 @@ namespace PulseDesk.Controllers
     {
 
         private readonly AppDbContext _db = db;
+
+        /// <summary>
+        /// Fetches all the tickets in the system. Customers can only see their own tickets, Agents and Admins can see all the tickets.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET api/tickets
+        ///     Only customers can see their own tickets
+        ///     Agents and admins can see all the tickets  
+        /// 
+        /// </remarks>
+        /// <returns>A success response</returns>
+        /// <response code="200">Allows the user to view the comments</response>
         [HttpGet]
 
         // Get api/tickets
-        // Only customers can see their own tickets
-        // Agents & admins can see all the tickets  
+ 
         public async Task<IActionResult> GetAll()
         {
             var userId = CurrentUserId;
@@ -52,6 +67,19 @@ namespace PulseDesk.Controllers
 
             return Ok(tickets);
         }
+
+        /// <summary>
+        /// Fetches a ticket by it's id
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/Tickets/{id}
+        /// 
+        /// </remarks>
+        /// <param name="id">The Ticket id </param>
+        /// <returns>A Ticket response</returns>
+        /// <response code="200">Allows the user to view the specific ticket</response>
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
@@ -89,13 +117,24 @@ namespace PulseDesk.Controllers
 
         }
 
-        // Only Customers can create tickets
+        /// <summary>
+        /// Only Customers can create tickets
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST /api/Tickets/{id}
+        /// 
+        /// </remarks>
+        /// <param name="req">The Ticket Creation DTO </param>
+        /// <returns>A Success response</returns>
+        /// <response code="200">Ticket Created successfully</response>
         [HttpPost]
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> Create([FromBody] CreateTicketRequest req)
         {
             var userId = CurrentUserId;
-
+             
             var ticket = new Ticket
             {
                 Title = req.Title,
@@ -112,6 +151,20 @@ namespace PulseDesk.Controllers
                 new { message = "Ticket created successfully", ticketId = ticket.Id });
         }
 
+        /// <summary>
+        /// Only Agents and Admins can update the ticket status, priority and assignment
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     PUT /api/Tickets/{id}
+        /// 
+        /// </remarks>
+        /// <param name="req">The Ticket Updating DTO </param>
+        /// <returns>A Success Response</returns>
+        /// <response code="200">Ticket was updated successfully</response>
+        /// <response code="401">Unauthorized to perform an update</response>
+        /// <response code="404">Could not find the ticket to update</response>
         [HttpPut("{id}")]
         [Authorize(Roles = "Agent,Admin")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateTicketRequest req)
@@ -149,8 +202,19 @@ namespace PulseDesk.Controllers
             return Ok(new { message = "Ticket updated successfully" });
         }
 
-        // Delete api/tickets/{id}
-
+        /// <summary>
+        /// Only Agents and Admins can update the ticket status, priority and assignment
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     DELETE /api/Tickets/{id}
+        /// 
+        /// </remarks>
+        /// <param name="id">The Ticket's id that will be deleted </param>
+        /// <returns>A Success Response</returns>
+        /// <response code="200">Ticket was updated successfully</response>
+        /// <response code="404">Could not find the ticket to update</response>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)

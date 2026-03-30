@@ -7,6 +7,9 @@ using PulseDesk.Models;
 
 namespace PulseDesk.Controllers
 {
+    /// <summary>
+    /// Endpoints for managing comments that are related to tickets. Users can create a comment for a ticket. Admins can delete any comment.
+    /// </summary>
     [ApiController]
     [Route("api/tickets/{ticketId}/comments")]
     [Authorize]
@@ -14,7 +17,19 @@ namespace PulseDesk.Controllers
     {
         private readonly AppDbContext _db = db;
 
-        // GET api/tickets/{ticketId}/comments
+        /// <summary>
+        /// Fetchs comments from a specific ticket
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET api/tickets/123/comments
+        ///     
+        /// </remarks>
+        /// <param name="ticketId">The unique identifier for the ticket.</param>
+        /// <returns>A User object.</returns>
+        /// <response code="200">Returns the ticket's comments</response>
+        /// <response code="401">If the user is not found/Authorized</response>
         [HttpGet]
         public async Task<IActionResult> GetAll(int ticketId)
         {
@@ -37,7 +52,20 @@ namespace PulseDesk.Controllers
 
         }
 
-        // POST api/tickets/{ticketId}/comments
+        /// <summary>
+        /// Creates a comment for a specific ticket
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/tickets/123/comments
+        ///     
+        /// </remarks>
+        /// <param name="ticketId">The unique identifier for the ticket.</param>
+        /// <param name="req">Request coming from Client.</param>
+        /// <returns>A Comment Response object.</returns>
+        /// <response code="200">Returns the ticket's comments</response>
+        /// <response code="401">If the user is not found/Authorized</response>
         [HttpPost]
         public async Task<IActionResult> Create(int ticketId, [FromBody] CreateCommentRequest req)
         {
@@ -74,6 +102,20 @@ namespace PulseDesk.Controllers
         }
 
         // DELETE api/tickets/{ticketId}/comments/{commentId}
+        /// <summary>
+        /// Deletes a comment for a specific ticket
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     DELETE api/tickets/123/comments
+        ///     
+        /// </remarks>
+        /// <param name="ticketId">The unique identifier for the ticket</param>
+        /// <param name="id">The unique identifier for the comment</param>
+        /// <returns>A code 200 response</returns>
+        /// <response code="200">Returns the ticket's comments</response>
+        /// <response code="401">If the user is not found/Authorized</response>
         [HttpDelete]
         [Authorize(Roles = "Admin")]
 
