@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Fayaad\\OneDrive\\Documents\\GitHub\\PulseDesk\\server\\PulseDesk\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CE09E545-5ED3-FC93-E261-EA5904643D05}|PulseDesk\\PulseDesk.csproj|c:\\users\\fayaad\\onedrive\\documents\\github\\pulsedesk\\server\\pulsedesk\\pulsedesk\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CE09E545-5ED3-FC93-E261-EA5904643D05}|PulseDesk\\PulseDesk.csproj|solutionrelative:pulsedesk\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 236,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Fayaad\\OneDrive\\Documents\\GitHub\\PulseDesk\\server\\PulseDesk\\PulseDesk\\Program.cs",
+              "RelativeDocumentMoniker": "PulseDesk\\Program.cs",
+              "ToolTip": "C:\\Users\\Fayaad\\OneDrive\\Documents\\GitHub\\PulseDesk\\server\\PulseDesk\\PulseDesk\\Program.cs",
+              "RelativeToolTip": "PulseDesk\\Program.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAAEUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-26T05:00:24.685Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
