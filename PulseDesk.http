@@ -1,6 +1,0 @@
-@PulseDesk_HostAddress = http://localhost:5286
-
-GET {{PulseDesk_HostAddress}}/getallusers/
-Accept: application/json 
-
-###
