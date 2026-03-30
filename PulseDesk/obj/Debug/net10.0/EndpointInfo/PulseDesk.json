@@ -1,0 +1,652 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "PulseDesk API",
+    "description": " API for PulseDesk (A ticket Help Desk Management Tool)\r\n\r\n        Roles\r\n            - Customers can create tickets and comment on their own tickets.\r\n            - Agents can manage tickets assigned to them and comment on those tickets.\r\n            - Admin have full access to all tickets and can manage users.\r\n\r\n        Authentication\r\n        Requires a valid JWT token for all endpoints.\r\n        ",
+    "contact": {
+      "name": "Fayaad Abrahams",
+      "email": "fayaad.abrahams1@gmail.com"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Registers a user to the system and returns a success message. Users always are registered as a Customer by default (Admins can change the role of a user later)",
+        "description": "Sample request:\r\n\r\n    POST api/Auth/register",
+        "requestBody": {
+          "description": "The request object coming from the client",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Allows the user to register"
+          },
+          "401": {
+            "description": "If the user is not found/Authorized"
+          }
+        }
+      }
+    },
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logs the user into the system and returns a JWT token for authentication",
+        "description": "Sample request:\r\n\r\n    POST api/Auth/login",
+        "requestBody": {
+          "description": "The request object coming from the client",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Allows the user to login"
+          },
+          "401": {
+            "description": "If the user is not found/Authorized"
+          }
+        }
+      }
+    },
+    "/api/Auth/{id}/role": {
+      "put": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Updates the role of a user (Only an Admin can change a user's role)",
+        "description": "Sample request:\r\n\r\n    PUT api/Auth/123/role",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique identifier for the user that will be changed",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request body coming from the client",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoleRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoleRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns a success response for user's role change"
+          },
+          "401": {
+            "description": "If the user is not found/Authorized"
+          }
+        }
+      }
+    },
+    "/api/tickets/{ticketId}/comments": {
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Fetchs comments from a specific ticket",
+        "description": "Sample request:\r\n\r\n    GET api/tickets/123/comments",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "The unique identifier for the ticket.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the ticket's comments"
+          },
+          "401": {
+            "description": "If the user is not found/Authorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Creates a comment for a specific ticket",
+        "description": "Sample request:\r\n\r\n    POST api/tickets/123/comments",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "The unique identifier for the ticket.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Request coming from Client.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the ticket's comments"
+          },
+          "401": {
+            "description": "If the user is not found/Authorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Deletes a comment for a specific ticket",
+        "description": "Sample request:\r\n\r\n    DELETE api/tickets/123/comments",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "The unique identifier for the ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "The unique identifier for the comment",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the ticket's comments"
+          },
+          "401": {
+            "description": "If the user is not found/Authorized"
+          }
+        }
+      }
+    },
+    "/api/Dashboard/stats": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Fetch the overall stats for the current tickets in the system. A High level overview of the system.",
+        "description": "Sample request:\r\n\r\n    GET api/dashboard/stats",
+        "responses": {
+          "200": {
+            "description": "Agent work load was pulled successfully"
+          }
+        }
+      }
+    },
+    "/api/Dashboard/agent-workload": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Fetch the workload of agents. \r\nHelpful to know if there's backlogs.",
+        "description": "Sample request:\r\n\r\n    GET /api/Dashboard/stats",
+        "responses": {
+          "200": {
+            "description": "Agent work load was pulled successfully"
+          }
+        }
+      }
+    },
+    "/api/Dashboard/recent-activity": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Get the most recent activity done on the system. This includes recent tickets created and recent updates on tickets",
+        "description": "Sample request:\r\n\r\n    GET api/dashboard/recent-activity",
+        "responses": {
+          "200": {
+            "description": "Allows the user to view the most recent tickets/activity"
+          }
+        }
+      }
+    },
+    "/api/Dashboard/users": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Fetch a list of all users in the system, their role and how many tickets they have raised or assigned to them. This is useful for Admins to manage users and see the workload of each user.",
+        "description": "Sample request:\r\n\r\n    GET /api/Dashboard/users",
+        "responses": {
+          "200": {
+            "description": "Fetched the users in the system"
+          }
+        }
+      }
+    },
+    "/api/Dashboard/delete-user/{id}": {
+      "delete": {
+        "tags": [
+          "Dashboard"
+        ],
+        "summary": "Deletes a user in the system. Only Admins can delete users.",
+        "description": "Sample request:\r\n\r\n    DELETE /api/Dashboard/delete-user/1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted the user successfully"
+          },
+          "404": {
+            "description": "No User found that matches that specific id"
+          }
+        }
+      }
+    },
+    "/api/Tickets": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Fetches all the tickets in the system. Customers can only see their own tickets, Agents and Admins can see all the tickets.",
+        "description": "Sample request:\r\n\r\n    GET api/tickets\r\n    Only customers can see their own tickets\r\n    Agents and admins can see all the tickets",
+        "responses": {
+          "200": {
+            "description": "Allows the user to view the comments"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Only Customers can create tickets",
+        "description": "Sample request:\r\n\r\n    POST /api/Tickets/{id}",
+        "requestBody": {
+          "description": "The Ticket Creation DTO",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTicketRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTicketRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTicketRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket Created successfully"
+          }
+        }
+      }
+    },
+    "/api/Tickets/{id}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Fetches a ticket by it's id",
+        "description": "Sample request:\r\n\r\n    GET /api/Tickets/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Ticket id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Allows the user to view the specific ticket"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Only Agents and Admins can update the ticket status, priority and assignment",
+        "description": "Sample request:\r\n\r\n    PUT /api/Tickets/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The Ticket Updating DTO",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTicketRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTicketRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTicketRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket was updated successfully"
+          },
+          "401": {
+            "description": "Unauthorized to perform an update"
+          },
+          "404": {
+            "description": "Could not find the ticket to update"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Only Agents and Admins can update the ticket status, priority and assignment",
+        "description": "Sample request:\r\n\r\n    DELETE /api/Tickets/{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Ticket's id that will be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket was updated successfully"
+          },
+          "404": {
+            "description": "Could not find the ticket to update"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateCommentRequest": {
+        "required": [
+          "body"
+        ],
+        "type": "object",
+        "properties": {
+          "body": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateTicketRequest": {
+        "required": [
+          "description",
+          "priority",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/PriorityType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PriorityType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "RegisterRequest": {
+        "required": [
+          "email",
+          "fullName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "minLength": 6,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StatusType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "UpdateRoleRequest": {
+        "required": [
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/UserRole"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateTicketRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/StatusType"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/PriorityType"
+          },
+          "agentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserRole": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter 'Bearer {token}'",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Handles any user authentication or authorization (Login, Registration and Role Management)"
+    },
+    {
+      "name": "Comments",
+      "description": "Endpoints for managing comments that are related to tickets. Users can create a comment for a ticket. Admins can delete any comment."
+    },
+    {
+      "name": "Dashboard",
+      "description": "Dashboard controller provides endpoints for statistics for PulseDesk. Only accessible through Admins and Agents (Privacy amongst costumers)"
+    },
+    {
+      "name": "Tickets",
+      "description": "Tickets are the bread and butter for PulseDesk, tickets are the issues a customer will point out. Customers can create tickets, view their own tickets and see the status of their tickets. Agents can view all tickets, update the status, priority and assignment of a ticket. Admins have all the permissions of agents and can also delete tickets."
+    }
+  ]
+}
