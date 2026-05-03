@@ -1,5 +1,25 @@
+# Visual Studio
 .vs/
+
+*/bin/
+*/obj/
+
 appsettings.json
 appsettings.Development.json
-/bin
-bin/
+
+*.user
+*.suo
+
+.dockerignore
+
+node_modules/
+dist/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+
+.DS_Store
+Thumbs.db
